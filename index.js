@@ -1,20 +1,103 @@
-import dotenv from 'dotenv';
-import express from 'express';
+import 'dotenv/config.js'
+import express from 'express'
+import {
+    makeCreateUserController,
+    makeDeleteUserController,
+    makeGetUserBalanceController,
+    makeGetUserByIdController,
+    makeUpdateUserController,
+} from './src/factories/controllers/user.js'
+import {
+    makeCreateTransactionController,
+    makeDeleteTransactionController,
+    makeGetTransactionsByUserIdController,
+    makeUpdateTransactionController,
+} from './src/factories/controllers/transaction.js'
 
-  // Carregando variáveis de ambiente do arquivo .env
+const app = express()
 
-import { PostgresHelper } from './src/db/postgres/helper.js';  // Corrigido para importar o pool corretamente
+app.use(express.json())
 
-const app = express();
+app.get('/api/users/:userId', async (request, response) => {
+    const getUserByIdController = makeGetUserByIdController()
 
-app.get('/', async (req, res) => {  // Tornando a função assíncrona
- 
-  const result = await PostgresHelper.query('SELECT * FROM users;');
+    const { statusCode, body } = await getUserByIdController.execute(request)
 
-  res.send(JSON.stringify(results));  // Corrigido para usar 'result' ao invés de 'results'
-});
+    response.status(statusCode).send(body)
+})
 
-app.listen(3000, () => {
-  console.log('Server is running on http://localhost:3000');
-}); 
+app.get('/api/users/:userId/balance', async (request, response) => {
+    const getUserBalanceController = makeGetUserBalanceController()
 
+    const { statusCode, body } = await getUserBalanceController.execute(request)
+
+    response.status(statusCode).send(body)
+})
+
+app.post('/api/users', async (request, response) => {
+    const createUserController = makeCreateUserController()
+
+    const { statusCode, body } = await createUserController.execute(request)
+
+    response.status(statusCode).send(body)
+})
+
+app.patch('/api/users/:userId', async (request, response) => {
+    const updateUserController = makeUpdateUserController()
+
+    const { statusCode, body } = await updateUserController.execute(request)
+
+    response.status(statusCode).send(body)
+})
+
+app.delete('/api/users/:userId', async (request, response) => {
+    const deleteUserController = makeDeleteUserController()
+
+    const { statusCode, body } = await deleteUserController.execute(request)
+
+    response.status(statusCode).send(body)
+})
+
+app.get('/api/transactions', async (request, response) => {
+    const getTransactionsByUserIdController =
+        makeGetTransactionsByUserIdController()
+
+    const { statusCode, body } =
+        await getTransactionsByUserIdController.execute(request)
+
+    response.status(statusCode).send(body)
+})
+
+app.post('/api/transactions', async (request, response) => {
+    const createTransactionController = makeCreateTransactionController()
+
+    const { statusCode, body } = await createTransactionController.execute(
+        request,
+    )
+
+    response.status(statusCode).send(body)
+})
+
+app.patch('/api/transactions/:transactionId', async (request, response) => {
+    const updateTransactionController = makeUpdateTransactionController()
+
+    const { statusCode, body } = await updateTransactionController.execute(
+        request,
+    )
+
+    response.status(statusCode).send(body)
+})
+
+app.delete('/api/transactions/:transactionId', async (request, response) => {
+    const deleteTransactionController = makeDeleteTransactionController()
+
+    const { statusCode, body } = await deleteTransactionController.execute(
+        request,
+    )
+
+    response.status(statusCode).send(body)
+})
+
+app.listen(process.env.PORT, () =>
+    console.log(`Listening on port ${process.env.PORT}`),
+)
