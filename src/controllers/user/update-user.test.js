@@ -2,6 +2,7 @@ import { EmailAlreadyInUseError, UserNotFoundError } from '../../errors/user'
 import { user } from '../../tests'
 import { UpdateUserController } from './update-user'
 import { faker } from '@faker-js/faker'
+import { describe, it, expect } from 'vitest'
 
 describe('UpdateUserController', () => {
     class UpdateUserUseCaseStub {

@@ -4,6 +4,7 @@ import { user as fakeUser } from '../../../tests'
 import { PostgresUpdateUserRepository } from './update-user.js'
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library'
 import { UserNotFoundError } from '../../../errors/user.js'
+import { describe, it, expect } from 'vitest'
 
 describe('PostgresUpdateUserRepository', () => {
     const updateUserParams = {

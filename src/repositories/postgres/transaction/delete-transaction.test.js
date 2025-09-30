@@ -4,6 +4,7 @@ import { transaction, user } from '../../../tests'
 import { PostgresDeleteTransactionRepository } from './delete-transaction'
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library'
 import { TransactionNotFoundError } from '../../../errors'
+import { describe, it, expect } from 'vitest'
 
 describe('PostgresDeleteTransactionRepository', () => {
     it('should delete a transaction on db', async () => {

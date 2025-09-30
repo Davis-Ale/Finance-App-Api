@@ -6,6 +6,7 @@ import { transaction, user } from '../../../tests'
 import { PostgresUpdateTransactionRepository } from './update-transaction'
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library.js'
 import { TransactionNotFoundError } from '../../../errors'
+import { describe, it, expect } from 'vitest'
 
 describe('PostgresUpdateTransactionRepository', () => {
     it('should update a transaction on db', async () => {

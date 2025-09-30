@@ -1,3 +1,5 @@
+/* eslint-env jest */
+import { describe, it, expect } from '@jest/globals'
 import { faker } from '@faker-js/faker'
 import { CreateUserController } from './create-user'
 import { EmailAlreadyInUseError } from '../../errors/user'

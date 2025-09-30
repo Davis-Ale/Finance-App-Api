@@ -1,6 +1,7 @@
 import { PostgresCreateUserRepository } from './create-user'
 import { user } from '../../../tests/index.js'
 import { prisma } from '../../../../prisma/prisma.js'
+import { describe, it, expect } from 'vitest'
 
 describe('CreateUserRepository', () => {
     it('should create a user on db', async () => {
